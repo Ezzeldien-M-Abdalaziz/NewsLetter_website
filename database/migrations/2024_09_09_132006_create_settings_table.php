@@ -19,13 +19,12 @@ return new class extends Migration
             $table->string('logo');
             $table->string('facebook');
             $table->string('twitter');
-            $table->string('insagram');
+            $table->string('instagram');
             $table->string('youtupe');
             $table->string('phone');
             $table->string('country');
             $table->string('city');
             $table->string('street');
-            $table->text('small_desc');
             $table->timestamps();
         });
     }
