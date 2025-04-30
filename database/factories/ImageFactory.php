@@ -22,5 +22,5 @@ class ImageFactory extends Factory
         ];
     }
 
-   
+
 }
