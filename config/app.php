@@ -169,6 +169,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\CheckSettingProvide::class,
+        App\Providers\CacheServiceProvider::class,
     ])->toArray(),
 
     /*
