@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('facebook');
             $table->string('twitter');
             $table->string('instagram');
-            $table->string('youtupe');
+            $table->string('youtube');
             $table->string('phone');
             $table->string('country');
             $table->string('city');

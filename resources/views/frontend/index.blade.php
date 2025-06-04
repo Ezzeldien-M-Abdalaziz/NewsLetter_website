@@ -1,7 +1,7 @@
 @extends('layouts.frontend.app')
 
 @section('body')
-    @php
+  @php
         $latest_three_posts = $posts->take(3);
     @endphp
       <!-- Top News Start-->

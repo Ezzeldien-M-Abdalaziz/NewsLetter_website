@@ -20,21 +20,25 @@ class CheckSettingProvide extends ServiceProvider
      */
     public function boot(): void
     {
-        Setting::firstOr(function(){
+        $getSetting = Setting::firstOr(function(){
             return Setting::create([
                 'site_name' => 'My Site',
-                'logo' => 'default',
+                'logo' => '/img/logo.png',
                 'favicon' => 'default',
                 'email' => 'news@gmail.com',
-                'facebook' => 'default',
-                'twitter' => 'default',
-                'instagram' => 'default',
-                'youtupe' => 'default',
-                'country' => 'default country',
-                'city' => 'default city',
-                'street' => 'default street',
+                'facebook' => 'http://www.facebook.com/',
+                'twitter' => 'http://www.twitter.com/',
+                'instagram' => 'http://www.instagram.com/',
+                'youtube' => 'http://www.youtube.com/',
+                'country' => 'Egypt',
+                'city' => 'Cairo',
+                'street' => 'B3',
                 'phone' => '11111',
             ]);
         });
+
+        view()->share([
+            'getSetting' => $getSetting
+        ]);
     }
 }
