@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\RelatedNewSite;
 use App\Models\Setting;
 use Illuminate\Support\ServiceProvider;
 
@@ -37,8 +38,14 @@ class CheckSettingProvide extends ServiceProvider
             ]);
         });
 
+        //share related sites
+        $relatedSites = RelatedNewSite::select('name', 'url')->get();
+
+
+
         view()->share([
-            'getSetting' => $getSetting
+            'getSetting' => $getSetting,
+            'relatedSites' => $relatedSites
         ]);
     }
 }
