@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Mail\Frontend\NewSubsciberMail;
 use App\Models\NewSubscriber;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
    use Illuminate\Support\Facades\Validator;
 
@@ -31,6 +33,7 @@ public function store(Request $request)
         return redirect()->back();
     }
 
+    Mail::to($request->email)->send(new NewSubsciberMail());
     Session::flash('success', 'You have successfully subscribed');
     return redirect()->back();
 }
