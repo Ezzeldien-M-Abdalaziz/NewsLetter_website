@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\NewSubscriberController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -15,8 +16,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('frontend.index');
+
+Route::group(['as' => 'frontend.',], function () {
+    Route::get('/', [HomeController::class, 'index'])->name('index');
+    Route::post('news-subscribe', [NewSubscriberController::class, 'store'])->name('news.subscribe');
+});
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+

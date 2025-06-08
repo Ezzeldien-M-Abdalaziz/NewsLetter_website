@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             PostSeeder::class,
             CommentSeeder::class,
             ContactSeeder::class,
-            RelatedSites::class
+            RelatedSiteSeeder::class
        ]);
     }
 }
