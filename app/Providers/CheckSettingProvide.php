@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Category;
 use App\Models\RelatedNewSite;
 use App\Models\Setting;
 use Illuminate\Support\ServiceProvider;
+use Spatie\FlareClient\Api;
 
 class CheckSettingProvide extends ServiceProvider
 {
@@ -41,11 +43,12 @@ class CheckSettingProvide extends ServiceProvider
         //share related sites
         $relatedSites = RelatedNewSite::select('name', 'url')->get();
 
-
+        $categories = Category::select('slug', 'id', 'name')->get();
 
         view()->share([
             'getSetting' => $getSetting,
-            'relatedSites' => $relatedSites
+            'relatedSites' => $relatedSites,
+            'categories' => $categories
         ]);
     }
 }

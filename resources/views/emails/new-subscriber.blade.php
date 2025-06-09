@@ -1,10 +1,10 @@
 <x-mail::message>
 # Introduction
 
-Thanks for subscribe !!
+The body of your message.
 
-<x-mail::button :url="route('frontend.index')">
-Visit our Website
+<x-mail::button :url="''">
+Button Text
 </x-mail::button>
 
 Thanks,<br>
