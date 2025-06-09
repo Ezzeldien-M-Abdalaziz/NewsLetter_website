@@ -1,6 +1,9 @@
-{{-- @extends('layouts.frontend.app')
+@extends('layouts.frontend.app')
 
 @section('body')
+<br>
+<br>
+<br>
 <!-- Main News Start-->
       <div class="main-news">
         <div class="container">
@@ -8,7 +11,7 @@
             <div class="col-lg-9">
               <div class="row">
 
-                @foreach ($posts as $post)
+                @forelse ($posts as $post)
                 <div class="col-md-4">
                     <div class="mn-img">
                       <img src="{{$post->images->first()->path}}" />
@@ -17,18 +20,23 @@
                       </div>
                     </div>
                   </div>
-                @endforeach
-               {{$posts->links()}}
 
-              </div>
+                  @empty
+                  <div class="alert-info">
+                    Category is empty
+                  </div>
+                @endforelse
+            </div>
+
+            {{$posts->links()}}
             </div>
 
             <div class="col-lg-3">
               <div class="mn-list">
                 <h2>Other Categories</h2>
                 <ul>
-                    @foreach ($read_more_posts as $post )
-                      <li><a href="">{{$post->title}}</a></li>
+                    @foreach ($categories as $category )
+                      <li><a href="{{route('frontend.category.posts' , $category->slug)}}">{{$category->name}}</a></li>
                     @endforeach
                 </ul>
               </div>
@@ -37,4 +45,4 @@
         </div>
       </div>
       <!-- Main News End-->
-@endsection --}}
+@endsection

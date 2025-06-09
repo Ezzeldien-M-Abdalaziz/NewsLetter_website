@@ -191,9 +191,9 @@
                     </div>
                   </div>
                 @endforeach
-               {{$posts->links()}}
 
-              </div>
+            </div>
+            {{$posts->links()}}
             </div>
 
             <div class="col-lg-3">
