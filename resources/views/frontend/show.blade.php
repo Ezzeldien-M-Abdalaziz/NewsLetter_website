@@ -20,7 +20,7 @@
                                     <div class="carousel-caption d-none d-md-block">
                                         <h5>{{ $mainPost->title }}</h5>
                                         <p>
-
+                                            {{substr($mainPost->desc , 0 , 80)}}
                                         </p>
                                     </div>
                                 </div>
