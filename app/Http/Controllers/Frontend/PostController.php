@@ -9,7 +9,9 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
     public function show($slug){
-        $post = Post::whereSlug($slug)->first();
+        $post = Post::with(['comments'=>function($query){
+            $query->limit(3);
+        }])->whereSlug($slug)->first();
         $category = $post->category;
         $posts_belongs_to_category = $category->posts()->select('id', 'title', 'slug')->limit(6)->get();
         return view('frontend.show', compact('post', 'category', 'posts_belongs_to_category'));

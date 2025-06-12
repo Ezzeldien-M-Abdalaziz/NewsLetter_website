@@ -37,6 +37,8 @@
                             <span class="sr-only">Next</span>
                         </a>
                     </div>
+
+
                     <div class="alert alert-info">
                        Publisher :  {{ $mainPost->user->name?? $mainPost->admin->name }}
                     </div>
@@ -44,29 +46,14 @@
                         {!! $mainPost->desc !!}
                     </div>
 
-                    @auth
                          <!-- Comment Section -->
-                    @if(auth('web')->user()->status != 0)
                     <div class="comment-section">
                         <!-- Comment Input -->
-                        @if ($mainPost->comment_able == true)
-                            <form id="commentForm">
                                 <div class="comment-input">
-                                    @csrf
                                     <input id="commentInput" name="comment" type="text" placeholder="Add a comment..." />
-                                    <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
-                                    <input type="hidden" name="post_id" value="{{ $mainPost->id }}">
                                     <button type="submit">Comment</button>
                                 </div>
-                            </form>
-                        @else
-                          <div class="alert alert-info">
-                            Unable To Comment
-                          </div>
-                        @endif
-                        <div style="display: none" id="errorMsg" class="alert alert-danger">
-                            {{-- display error --}}
-                        </div>
+
                         <!-- Display Comments -->
                         <div class="comments">
                             @foreach ($mainPost->comments as $comment)
@@ -84,12 +71,8 @@
                         </div>
 
                         <!-- Show More Button -->
-                        @if ($mainPost->comments->count() > 2)
                             <button id="showMoreBtn" class="show-more-btn">Show more</button>
-                        @endif
                     </div>
-                    @endif
-                    @endauth
 
                     <!-- Related News -->
 
@@ -202,7 +185,7 @@
 
 
 
-{{-- @push('js')
+@push('js')
 
     <script>
         var baseUrl = "{{ asset('') }}";
@@ -267,4 +250,4 @@
             });
         });
     </script>
-@endpush --}}
+@endpush

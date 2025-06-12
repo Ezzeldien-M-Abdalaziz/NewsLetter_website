@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Category;
 use App\Models\Post;
+use App\Models\RelatedNewSite;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,6 +23,13 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+        //share related sites
+        $relatedSites = RelatedNewSite::select('name', 'url')->get();
+        $categories = Category::select('slug', 'id', 'name')->get();
+
+        /************************CACHE **************************/
+
         //  Cache::forget('latest_posts');
         //  Cache::forget('greatest_posts_comments');
 
@@ -47,6 +56,8 @@ class ViewServiceProvider extends ServiceProvider
 
 
         view()->share([
+            'relatedSites' => $relatedSites,
+            'categories' => $categories,
             'latest_posts' => $latest_posts,
             'greatest_posts_comments' => $greatest_posts_comments
         ]);
