@@ -163,7 +163,7 @@
                                     </div>
                                     {{-- popular --}}
                                     <div id="popular" class="container tab-pane fade">
-                                        @foreach ($gretest_posts_comments as $post)
+                                        @foreach ($greatest_posts_comments as $post)
                                             <div class="tn-news">
                                                 <div class="tn-img">
                                                     <img src="{{asset( $post->images->first()->path) }}" />
@@ -199,3 +199,72 @@
     </div>
     <!-- Single News End-->
 @endsection
+
+
+
+{{-- @push('js')
+
+    <script>
+        var baseUrl = "{{ asset('') }}";
+        // show more comments
+        $(document).on('click', '#showMoreBtn', function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: "{{ route('frontend.post.getAllComments', $mainPost->slug) }}",
+                type: 'GET',
+                success: function(data) {
+                    $('.comments').empty();
+                    $.each(data, function(key, comment) {
+                        $('.comments').append(`<div class="comment">
+                        <img src="${comment.user.image}" alt="User Image" class="comment-img" />
+                        <div class="comment-content">
+                          <span class="username">${comment.user.name}</span>
+                          <p class="comment-text">${comment.comment}</p>
+                        </div>
+                      </div>`);
+                        $('#showMoreBtn').hide();
+
+                    });
+
+                },
+                error: function(data) {
+
+                },
+            });
+
+        });
+
+        // save comments
+        $(document).on('submit', '#commentForm', function(e) {
+            e.preventDefault();
+            var formData = new FormData($(this)[0]);
+
+            $('#commentInput').val('');
+
+            $.ajax({
+                url: "{{ route('frontend.post.comments.store') }}",
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+
+                success: function(data) {
+                    $('#errorMsg').hide();
+                    $('.comments').prepend(`<div class="comment">
+                                    <img src="${baseUrl}${data.comment.user.image}" alt="User Image" class="comment-img" />
+                                    <div class="comment-content">
+                                        <span class="username">${data.comment.user.name}</span>
+                                        <p class="comment-text">${data.comment.comment}</p>
+                                    </div>
+                                </div>`);
+                },
+
+                error: function(data) {
+                    var response = $.parseJSON(data.responseText);
+                    $('#errorMsg').text(response.errors.comment).show();
+                },
+
+            });
+        });
+    </script>
+@endpush --}}
