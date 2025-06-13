@@ -11,7 +11,7 @@ class PostController extends Controller
 {
     public function show($slug){
         $mainPost = Post::with(['comments'=>function($query){
-            $query->limit(3);
+            $query->latest()->limit(3);
         }])->whereSlug($slug)->first();
         $category = $mainPost->category;
         $posts_belongs_to_category = $category->posts()->select('id', 'title', 'slug')->limit(6)->get();
@@ -44,6 +44,8 @@ class PostController extends Controller
             'comment' => $request->comment,
             'ip_address' => $request->ip()
         ]);
+
+        $comment->load('user');  //to load the relationship
 
         if(!$comment){
             return response()->json([
