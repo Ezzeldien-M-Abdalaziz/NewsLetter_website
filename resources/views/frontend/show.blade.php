@@ -49,10 +49,15 @@
                          <!-- Comment Section -->
                     <div class="comment-section">
                         <!-- Comment Input -->
+                            <form id="commentForm">
                                 <div class="comment-input">
-                                    <input id="commentInput" name="comment" type="text" placeholder="Add a comment..." />
-                                    <button type="submit">Comment</button>
-                                </div>
+                                        @csrf
+                                        <input id="commentInput" name="comment" type="text" placeholder="Add a comment..." />
+                                        <input type="hidden" name="user_id" value="1">
+                                        <input type="hidden" name="post_id" value="{{ $mainPost->id }}">
+                                        <button type="submit">Comment</button>
+                                    </div>
+                                </form>
 
                         <!-- Display Comments -->
                         <div class="comments">
@@ -71,7 +76,7 @@
                         </div>
 
                         <!-- Show More Button -->
-                            <button id="showMoreBtn" class="show-more-btn">Show more</button>
+                            <button id="showMoreBtn" class="show-more-btn" >Show more</button>
                     </div>
 
                     <!-- Related News -->

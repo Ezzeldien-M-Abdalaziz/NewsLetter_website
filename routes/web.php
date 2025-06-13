@@ -26,6 +26,7 @@ Route::group(['as' => 'frontend.',], function () {
     Route::get('/category/{slug}' , CategoryController::class)->name('category.posts');
     Route::get('post/{slug}' , [PostController::class , 'show'])->name('post.show');
     Route::get('post/comments/{slug}' , [PostController::class , 'getAllPosts'])->name('post.getAllComments');
+    Route::post('post/comments/store' , [PostController::class , 'saveComment'])->name('post.comments.store');
 });
 
 Auth::routes();

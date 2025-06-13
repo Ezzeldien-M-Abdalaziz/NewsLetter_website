@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -27,9 +28,33 @@ class PostController extends Controller
         }
 
         $comments = $post->comments()->with('user')->get();
+        return response()->json($comments);
+    }
+
+    public function saveComment(Request $request){
+
+        $request->validate([
+            'user_id' => 'required | exists:users,id',
+            'comment' => 'required | string | max:255',
+            'post_id' => 'required | exists:posts,id'
+        ]);
+        $comment = Comment::create([
+            'user_id' => $request->user_id,
+            'post_id' => $request->post_id,
+            'comment' => $request->comment,
+            'ip_address' => $request->ip()
+        ]);
+
+        if(!$comment){
+            return response()->json([
+                'status' => 403,
+                'message' => 'Something went wrong'
+            ]);
+        }
+
         return response()->json([
-            'status' => true,
-            'comments' => $comments
+            'status' => 201,
+            'comment' => $comment,
         ]);
     }
 }

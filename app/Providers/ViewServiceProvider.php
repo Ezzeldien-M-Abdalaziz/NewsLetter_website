@@ -35,7 +35,7 @@ class ViewServiceProvider extends ServiceProvider
 
         if(!Cache::has('latest_posts')){
             $latest_posts = Post::select('id', 'title','slug')->latest()->limit(5)->get();
-            Cache::remember('recent_posts', 3600, function () use ($latest_posts) {
+            Cache::remember('latest_posts', 3600, function () use ($latest_posts) {
                 return $latest_posts;
             });
         }
