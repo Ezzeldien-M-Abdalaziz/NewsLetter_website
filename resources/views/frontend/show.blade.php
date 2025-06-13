@@ -46,6 +46,12 @@
                         {!! $mainPost->desc !!}
                     </div>
 
+                    <div style="display: none" id="errorMsg" class="alert alert-danger">
+                        {{-- Display error --}}
+
+
+                    </div>
+
                          <!-- Comment Section -->
                     <div class="comment-section">
                         <!-- Comment Input -->
@@ -227,7 +233,7 @@
             e.preventDefault();
             var formData = new FormData($(this)[0]);
 
-            $('#commentInput').val('');
+            $('#commentInput').val('');  // Clear the input field
 
             $.ajax({
                 url: "{{ route('frontend.post.comments.store') }}",
@@ -237,7 +243,7 @@
                 contentType: false,
 
                 success: function(data) {
-                    $('#errorMsg').hide();
+                    $('#errorMsg').hide(); //remove the error msg after commenting again
                     $('.comments').prepend(`<div class="comment">
                                     <img src="${baseUrl}${data.comment.user.image}" alt="User Image" class="comment-img" />
                                     <div class="comment-content">
