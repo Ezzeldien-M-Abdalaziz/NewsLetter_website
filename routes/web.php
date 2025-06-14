@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Frontend\CategoryController;
+use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\NewSubscriberController;
 use App\Http\Controllers\Frontend\PostController;
@@ -27,6 +28,11 @@ Route::group(['as' => 'frontend.',], function () {
     Route::get('post/{slug}' , [PostController::class , 'show'])->name('post.show');
     Route::get('post/comments/{slug}' , [PostController::class , 'getAllPosts'])->name('post.getAllComments');
     Route::post('post/comments/store' , [PostController::class , 'saveComment'])->name('post.comments.store');
+
+
+    Route::get('contact' , [ContactController::class , 'index'])->name('contact.index');
+    Route::post('contact/store' , [ContactController::class , 'store'])->name('contact.store');
+
 });
 
 Auth::routes();
