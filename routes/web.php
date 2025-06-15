@@ -25,13 +25,22 @@ Route::group(['as' => 'frontend.',], function () {
     Route::get('/', [HomeController::class, 'index'])->name('index');
     Route::post('news-subscribe', [NewSubscriberController::class, 'store'])->name('news.subscribe');
     Route::get('/category/{slug}' , CategoryController::class)->name('category.posts');
-    Route::get('post/{slug}' , [PostController::class , 'show'])->name('post.show');
-    Route::get('post/comments/{slug}' , [PostController::class , 'getAllPosts'])->name('post.getAllComments');
-    Route::post('post/comments/store' , [PostController::class , 'saveComment'])->name('post.comments.store');
+
+    //post controller
+    Route::controller(PostController::class)->name('post.')->prefix('post')->group(function () {
+        Route::get('/{slug}' ,  'show')->name('show');
+        Route::get('/comments/{slug}' ,  'getAlls')->name('getAllComments');
+        Route::post('/comments/store' ,  'saveComment')->name('comments.store');
+    });
 
 
-    Route::get('contact' , [ContactController::class , 'index'])->name('contact.index');
-    Route::post('contact/store' , [ContactController::class , 'store'])->name('contact.store');
+    //contact controller
+    Route::controller(ContactController::class)->name('contact.')->prefix('contact-us')->group(function () {
+        Route::get('/' ,  'index')->name('index');
+        Route::post('/store' ,  'store')->name('store');
+    });
+
+
 
 });
 
