@@ -5,6 +5,7 @@ use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\NewSubscriberController;
 use App\Http\Controllers\Frontend\PostController;
+use App\Http\Controllers\Frontend\SearchController;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -22,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::group(['as' => 'frontend.',], function () {
-    Route::get('/', [HomeController::class, 'index'])->name('index');
+    Route::get('/', [HomeController::class , 'index'])->name('index');
     Route::post('news-subscribe', [NewSubscriberController::class, 'store'])->name('news.subscribe');
     Route::get('/category/{slug}' , CategoryController::class)->name('category.posts');
 
@@ -40,6 +41,8 @@ Route::group(['as' => 'frontend.',], function () {
         Route::post('/store' ,  'store')->name('store');
     });
 
+    //seaech controller
+    Route::match(['get' , 'post'],'/search' , SearchController::class)->name('search');
 
 
 });
