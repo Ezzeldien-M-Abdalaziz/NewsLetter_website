@@ -19,7 +19,7 @@ class SearchController extends Controller
 
         $keyword = strip_tags($request->search);
 
-        $posts = Post::where('title' , 'like' , '%' . $keyword. '%')
+        $posts = Post::active()->where('title' , 'like' , '%' . $keyword. '%')
         ->orWhere('desc' , 'like' , '%' . $keyword . '%')
         ->paginate(14);
 

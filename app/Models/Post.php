@@ -49,4 +49,9 @@ class Post extends Model
         ];
     }
 
+    public function scopeActive($query)
+    {
+        return $query->whereStatus(1);
+    }
+
 }

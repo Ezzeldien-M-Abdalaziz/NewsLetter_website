@@ -34,14 +34,14 @@ class ViewServiceProvider extends ServiceProvider
         //  Cache::forget('greatest_posts_comments');
 
         if(!Cache::has('latest_posts')){
-            $latest_posts = Post::select('id', 'title','slug')->latest()->limit(5)->get();
+            $latest_posts = Post::active()->select('id', 'title','slug')->latest()->limit(5)->get();
             Cache::remember('latest_posts', 3600, function () use ($latest_posts) {
                 return $latest_posts;
             });
         }
 
         if(!Cache::has('greatest_posts_comments')){
-           $greatest_posts_comments = Post::withCount('comments')
+           $greatest_posts_comments = Post::active()->withCount('comments')
             ->orderBy('comments_count', 'desc')
             ->take(5)
             ->get();
