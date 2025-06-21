@@ -20,7 +20,7 @@ class HomeController extends Controller
             ->take(3)
             ->get();
 
-        $categories = Category::all();
+        $categories = Category::active()->all();
 
         $categories_with_posts = $categories->map(function ($category) {
             $category->posts = $category->posts()->limit(4)->get();
