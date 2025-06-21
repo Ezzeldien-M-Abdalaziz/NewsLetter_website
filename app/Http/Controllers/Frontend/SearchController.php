@@ -14,11 +14,13 @@ class SearchController extends Controller
     public function __invoke(Request $request)
     {
         $request->validate([
-            'search' => 'required|string'
+            'search' => 'nullable|string|max:100'
         ]);
 
-        $posts = Post::where('title' , 'like' , '%' . $request->search . '%')
-        ->orWhere('desc' , 'like' , '%' . $request->search . '%')
+        $keyword = strip_tags($request->search);
+
+        $posts = Post::where('title' , 'like' , '%' . $keyword. '%')
+        ->orWhere('desc' , 'like' , '%' . $keyword . '%')
         ->paginate(14);
 
         return view('frontend.search' , compact('posts'));
