@@ -10,10 +10,18 @@
             </div>
             <div class="col-md-6">
               <div class="tb-menu">
-                <a href="">About</a>
-                <a href="">Privacy</a>
-                <a href="">Terms</a>
-                <a href="{{route('frontend.contact.index')}}">Contact</a>
+                @guest
+                    <a href="{{route('register')}}">Register</a>
+                    <a href="{{route('login')}}">Login</a>
+                @endguest
+                @auth
+                    <a href="javascript:void(0)" onclick="if(confirm('Are you sure you want to logout?')){document.getElementById('logout-form').submit()} return false">Logout</a>
+                @endauth
+
+                <form id="logout-form" action="{{route('logout')}}" method="POST">
+                    @csrf
+                </form>
+
               </div>
             </div>
           </div>
