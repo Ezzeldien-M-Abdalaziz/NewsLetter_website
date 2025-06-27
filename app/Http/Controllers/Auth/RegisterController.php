@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -57,7 +60,7 @@ class RegisterController extends Controller
             'country' => ['nullable', 'string', 'max:50'],
             'city' => ['nullable', 'string', 'max:50'],
             'street' => ['nullable', 'string', 'max:50'],
-            'image' => ['nullable']
+            'image' => ['required' , 'image' , 'mimes:jpeg,png,jpg,gif,svg' , 'max:2048']
         ]);
     }
 
@@ -80,5 +83,22 @@ class RegisterController extends Controller
             'street' => $data['street'],
             'image' => $data['image']
         ]);
+    }
+
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        $this->guard()->login($user);
+
+        if ($response = $this->registered($request, $user)) {
+            return $response;
+        }
+
+        return $request->wantsJson()
+                    ? new JsonResponse([], 201)
+                    : redirect($this->redirectPath());
     }
 }
