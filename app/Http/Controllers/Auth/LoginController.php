@@ -46,4 +46,11 @@ class LoginController extends Controller
         Session::flash('success', 'You have logged out successfully!');
         return redirect()->route('frontend.index');
     }
+
+    //override authenticated function from the trait
+    protected function authenticated(Request $request, $user)
+    {
+        Session::flash('success', 'You have logged in successfully!');
+        return redirect()->route('frontend.index');
+    }
 }
