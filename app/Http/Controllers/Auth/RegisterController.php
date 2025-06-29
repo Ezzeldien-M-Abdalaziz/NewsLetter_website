@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -72,7 +74,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
@@ -81,8 +83,20 @@ class RegisterController extends Controller
             'country' => $data['country'],
             'city' => $data['city'],
             'street' => $data['street'],
-            'image' => $data['image']
         ]);
+
+        if($data['image']){
+            $file = $data['image'];
+            $filename = Str::slug($user->username).time().'.'.$file->getClientOriginalExtension();
+            $path = $file->storeAs('uploads/users', $filename , ['disk' => 'uploads']);
+
+            $user->update([
+                'image' => $path
+            ]);
+        }
+
+        return $user;
+
     }
 
     public function register(Request $request)
@@ -96,7 +110,7 @@ class RegisterController extends Controller
         if ($response = $this->registered($request, $user)) {
             return $response;
         }
-
+        Session::flash('success', 'Registered successfully');
         return $request->wantsJson()
                     ? new JsonResponse([], 201)
                     : redirect($this->redirectPath());
