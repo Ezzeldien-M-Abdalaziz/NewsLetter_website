@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Frontend\CategoryController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\HomeController;
@@ -21,9 +22,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//redirects / to /home
+Route::redirect('/' , '/home');
+
 
 Route::group(['as' => 'frontend.',], function () {
-    Route::get('/', [HomeController::class , 'index'])->name('index');
+    Route::get('/home', [HomeController::class , 'index'])->name('index');
     Route::post('news-subscribe', [NewSubscriberController::class, 'store'])->name('news.subscribe');
     Route::get('/category/{slug}' , CategoryController::class)->name('category.posts');
 
@@ -46,9 +50,14 @@ Route::group(['as' => 'frontend.',], function () {
 
 
 });
+//overwrites the routes in vendor/laravel/ui/src/authroutes , **doesnt work there because of package problem
+Route::prefix('email')->name('verification.')->controller(VerificationController::class)->group(function () {
+    Route::get('/verify', action: 'show')->name('notice');
+    Route::get('/verify/{id}/{hash}','verify')->name('verify');
+    Route::post('/resend', 'resend')->name('resend');
+});
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
