@@ -1,5 +1,9 @@
 @extends('layouts.frontend.app')
 @section('title')
+    Contact
+@endsection
+
+@section('title')
     Contact-Us
 @endsection
 @section('body')

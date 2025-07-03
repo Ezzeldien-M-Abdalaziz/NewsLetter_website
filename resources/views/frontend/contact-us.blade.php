@@ -1,5 +1,9 @@
 @extends('layouts.frontend.app')
 
+@section('title')
+    Contact-Us
+@endsection
+
 @section('body')
 <div class="breadcrumb-wrap">
     <div class="container">
