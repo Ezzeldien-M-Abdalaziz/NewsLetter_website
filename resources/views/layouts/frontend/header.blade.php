@@ -92,9 +92,6 @@
                     @endforeach
                   </div>
                 </div>
-                <a href="single-page.html" class="nav-item nav-link"
-                  >Single Page</a
-                >
                 <a href="dashboard.html" class="nav-item nav-link">Dashboard</a>
                 <a href="{{route('frontend.contact.index')}}" class="nav-item nav-link">Contact Us</a>
               </div>
