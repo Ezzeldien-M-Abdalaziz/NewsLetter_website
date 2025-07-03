@@ -33,9 +33,9 @@
     />
     <link href="{{asset('assets/frontend')}}/lib/slick/slick.css" rel="stylesheet" />
     <link href="{{asset('assets/frontend')}}/lib/slick/slick-theme.css" rel="stylesheet" />
-
     <!-- Template Stylesheet -->
     <link href="{{asset('assets/frontend/css/style.css')}}" rel="stylesheet" />
+    <Link href="{{asset('assets/vendor/file-input/css/fileinput.min.css')}}" rel="stylesheet"></Link>
   </head>
 
   <body>
@@ -74,6 +74,8 @@
 
     <!-- Template Javascript -->
     <script src="{{asset('assets/frontend/js/main.js')}}"></script>
+    {{--file input--}}
+    <script src="{{asset('assets/vendor/file-input/js/fileinput.min.js')}}"></script>
     @stack('js')
   </body>
 </html>
