@@ -3,24 +3,14 @@
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Frontend\CategoryController;
 use App\Http\Controllers\Frontend\ContactController;
+use App\Http\Controllers\Frontend\Dashboard\ProfileController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\NewSubscriberController;
 use App\Http\Controllers\Frontend\PostController;
 use App\Http\Controllers\Frontend\SearchController;
-use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
 //redirects / to /home
 Route::redirect('/' , '/home');
@@ -45,22 +35,26 @@ Route::group(['as' => 'frontend.',], function () {
         Route::post('/store' ,  'store')->name('store');
     });
 
-    //seaech controller
+    //search controller
     Route::match(['get' , 'post'],'/search' , SearchController::class)->name('search');
 
+    //dashboard routes
+    Route::prefix('user/')->name('dashboard.')->middleware(['auth:web' , 'verified'])->group(function () {
+        Route::controller(ProfileController::class)->group(function () {
+            Route::get('profile' , 'index')->name('profile');
+        });
+    });
 
 });
+
 //overwrites the routes in vendor/laravel/ui/src/authroutes , **doesnt work there because of package problem
 Route::prefix('email')->name('verification.')->controller(VerificationController::class)->group(function () {
-    Route::get('/verify', action: 'show')->name('notice');
+    Route::get('/verify',  'show')->name('notice');
     Route::get('/verify/{id}/{hash}','verify')->name('verify');
     Route::post('/resend', 'resend')->name('resend');
 });
 
-Route::get('test' , function(){
-    return view('frontend.dashboard.profile');
-});
-
+//auth routes by laravel ui package
 Auth::routes();
 
 
