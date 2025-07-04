@@ -171,3 +171,21 @@
 </div>
 <!-- Profile End -->
 @endsection
+
+@push('js')
+    <script>
+        // Add your JavaScript code here
+            $(function(){
+                $('#postImage').fileinput({
+                    theme: 'fa5',
+                    allowedFileTypes: ['image'],
+                    maxFileCount: 5,
+                    enableResumableUpload: false,
+                });
+                $('#postContent').summernote({
+                    height: 300,
+                });
+            });
+
+    </script>
+@endpush
