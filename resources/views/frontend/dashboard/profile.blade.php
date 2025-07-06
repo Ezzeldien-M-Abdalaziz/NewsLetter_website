@@ -44,7 +44,9 @@
                 </div>
                 <br>
 
-                <!-- Add Post Section -->
+            <form action="{{route('frontend.dashboard.profile.update')}}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <!-- Add Post Section -->
                 <section id="add-post" class="add-post-section mb-5">
                     <h2>Add Post</h2>
                     <div class="post-form p-3 border rounded">
@@ -77,6 +79,9 @@
                         <button class="btn btn-primary post-btn">Post</button>
                     </div>
                 </section>
+            </form>
+
+
 
                 <!-- Posts Section -->
                 <section id="posts" class="posts-section">
