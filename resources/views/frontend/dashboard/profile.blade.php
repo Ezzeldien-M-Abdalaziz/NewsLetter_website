@@ -44,6 +44,17 @@
                 </div>
                 <br>
 
+
+                {{-- error messages --}}
+                @if (session()->has('errors'))
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             <form action="{{route('frontend.dashboard.post.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <!-- Add Post Section -->
