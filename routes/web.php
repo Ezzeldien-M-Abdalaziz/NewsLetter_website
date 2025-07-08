@@ -39,9 +39,10 @@ Route::group(['as' => 'frontend.',], function () {
     Route::match(['get' , 'post'],'/search' , SearchController::class)->name('search');
 
     //dashboard routes
-    Route::prefix('user/')->name('dashboard.')->middleware(['auth:web' , 'verified'])->group(function () {
+    Route::prefix('account/')->name('dashboard.')->middleware(['auth:web' , 'verified'])->group(function () {
         Route::controller(ProfileController::class)->group(function () {
             Route::get('profile' , 'index')->name('profile');
+            Route::post('post/store' , 'storePost')->name('post.store');
         });
     });
 

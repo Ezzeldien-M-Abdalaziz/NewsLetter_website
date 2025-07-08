@@ -44,39 +44,39 @@
                 </div>
                 <br>
 
-            <form action="{{route('frontend.dashboard.profile.update')}}" method="POST" enctype="multipart/form-data">
+            <form action="{{route('frontend.dashboard.post.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <!-- Add Post Section -->
                 <section id="add-post" class="add-post-section mb-5">
                     <h2>Add Post</h2>
                     <div class="post-form p-3 border rounded">
                         <!-- Post Title -->
-                        <input type="text" id="postTitle" class="form-control mb-2" placeholder="Post Title" />
+                        <input name="title" type="text" id="postTitle" class="form-control mb-2" placeholder="Post Title" />
 
                         <!-- Post Content -->
-                        <textarea id="postContent" class="form-control mb-2" rows="3" placeholder="What's on your mind?"></textarea>
+                        <textarea name="desc" id="postContent" class="form-control mb-2" rows="3" placeholder="What's on your mind?"></textarea>
 
                         <!-- Image Upload -->
-                        <input type="file" id="postImage" class="form-control mb-2" accept="image/*" multiple />
+                        <input name="images[]" type="file" id="postImage" class="form-control mb-2" accept="image/*" multiple />
                         <div class="tn-slider mb-2">
                             <div id="imagePreview" class="slick-slider"></div>
                         </div>
 
                         <!-- Category Dropdown -->
-                        <select id="postCategory" class="form-select mb-2">
+                        <select name="category_id" id="postCategory" class="form-select mb-2">
                             <option value="">Select Category</option>
-                            <option value="general">General</option>
-                            <option value="tech">Tech</option>
-                            <option value="life">Life</option>
+                            @foreach ($categories as $category)
+                                <option value="{{$category->id}}">{{$category->name}}</option>
+                            @endforeach
                         </select><br>
 
                         <!-- Enable Comments Checkbox -->
                         <label class="label">
-                            Enable Comments: <input type="checkbox" class="" /> Enable Comments
+                            Enable Comments: <input name="comment_able" type="checkbox" class="" /> Enable Comments
                         </label><br>
 
                         <!-- Post Button -->
-                        <button class="btn btn-primary post-btn">Post</button>
+                        <button type="submit" class="btn btn-primary post-btn">Post</button>
                     </div>
                 </section>
             </form>
