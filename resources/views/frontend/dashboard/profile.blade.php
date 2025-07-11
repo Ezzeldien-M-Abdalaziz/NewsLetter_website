@@ -1,7 +1,7 @@
 @extends('layouts.frontend.app')
 
 @section('title')
-    {{ config('app.name') }} | Profile
+    Profile
 @endsection
 
 @section('body')

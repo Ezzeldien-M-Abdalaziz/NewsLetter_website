@@ -21,7 +21,7 @@
                 @foreach ($latest_three_posts as $post)
                 <div class="col-md-6">
                   <div class="tn-img">
-                    <img src="{{$post->images->first()->path}}" />
+                    <img style="height: 390px;width: 500px;" src="{{$post->images->first()->path}}" />
                     <div class="tn-title">
                       <a href="{{route('frontend.post.show', $post->slug)}}">{{$post->title}}</a>
                     </div>
