@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Frontend\Dashboard;
 
-use App\Http\Controllers\Controller;
+use App\Utils\ImageManager;
+use Illuminate\Support\Str;
 use App\Http\Requests\PostRequest;
-use App\Models\Category;
-use App\Models\Post;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 
 class ProfileController extends Controller
@@ -31,28 +30,17 @@ class ProfileController extends Controller
             //best way
             $post = auth()->user()->posts()->create($request->except('_token' , 'images')); //token is sent by the form by default , so we need to remove it because it is not a field in the database
 
-            if($request->hasFile('images')){
-                foreach($request->file('images') as $image){
-                    $file = $post->slug . '-' . time() . '.' . $image->getClientOriginalExtension();
-                    $path = $image->storeAs('uploads/posts', $file , ['disk' => 'uploads']);
-                    $post->images()->create([
-                        'path' => $path
-                    ]);
-                }
-            }
+            //upload images
+            ImageManager::uploadImages($post, $request);
             DB::commit();
-
 
         }catch(\Exception $e){
             DB::rollBack();
             return back()->with('error', $e->getMessage());
         }
 
-
         Session::flash('success', 'Post created successfully');
-
         return back();
-
     }
 
 
