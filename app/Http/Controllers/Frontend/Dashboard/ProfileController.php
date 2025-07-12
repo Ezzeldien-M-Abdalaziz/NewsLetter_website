@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 
 class ProfileController extends Controller
@@ -18,7 +19,6 @@ class ProfileController extends Controller
     public function storePost(PostRequest $request){
 
         try{
-
             DB::beginTransaction();
             $request->validated();
             $request->comment_able == "on" ? $request->merge(['comment_able' => 1]) : $request->merge(['comment_able' => 0]);   // overwrite the value of the comment_able field
@@ -33,6 +33,7 @@ class ProfileController extends Controller
             //upload images
             ImageManager::uploadImages($post, $request);
             DB::commit();
+            Cache::forget('read_more_posts');  //forget the read more posts cache to refresh it and show the new post ,, this is optional if u want the new posts immediately
 
         }catch(\Exception $e){
             DB::rollBack();
