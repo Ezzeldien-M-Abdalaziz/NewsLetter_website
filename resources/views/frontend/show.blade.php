@@ -28,9 +28,6 @@
                                     <img src="{{ asset($image->path) }}" class="d-block w-100" alt="First Slide">
                                     <div class="carousel-caption d-none d-md-block">
                                         <h5>{{ $mainPost->title }}</h5>
-                                        <p>
-                                            {!! substr($mainPost->desc , 0 , 80) !!}
-                                        </p>
                                     </div>
                                 </div>
                             @endforeach
@@ -91,7 +88,9 @@
                         </div>
 
                         <!-- Show More Button -->
+                        @if($mainPost->comments->count() > 2)
                             <button id="showMoreBtn" class="show-more-btn" >Show more</button>
+                        @endif
                     </div>
 
                     <!-- Related News -->
