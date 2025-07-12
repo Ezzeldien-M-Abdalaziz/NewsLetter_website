@@ -209,7 +209,7 @@
                 <h2>Read More</h2>
                 <ul>
                     @foreach ($read_more_posts as $post )
-                      <li><a href="">{{$post->title}}</a></li>
+                      <li><a href="{{route('frontend.post.show', $post->slug)}}">{{$post->title}}</a></li>
                     @endforeach
                 </ul>
               </div>

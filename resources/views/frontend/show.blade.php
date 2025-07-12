@@ -52,6 +52,7 @@
                         {!! $mainPost->desc !!}
                     </div>
 
+
                     <div style="display: none" id="errorMsg" class="alert alert-danger">
                         {{-- Display error --}}
 
@@ -61,15 +62,21 @@
                          <!-- Comment Section -->
                     <div class="comment-section">
                         <!-- Comment Input -->
+                           @if ($mainPost->comment_able == 1)
                             <form id="commentForm">
                                 <div class="comment-input">
                                         @csrf
                                         <input id="commentInput" name="comment" type="text" placeholder="Add a comment..." />
-                                        <input type="hidden" name="user_id" value="1">
+                                        <input type="hidden" name="user_id" value="{{ auth()->user()->id ?? 0}}">
                                         <input type="hidden" name="post_id" value="{{ $mainPost->id }}">
                                         <button type="submit">Comment</button>
                                     </div>
                                 </form>
+                           @else
+                                <div class="alert alert-info">
+                                    <p>Comments are disabled for this post.</p>
+                                </div>
+                           @endif
 
                         <!-- Display Comments -->
                         <div class="comments">
