@@ -1,6 +1,7 @@
 <?php
 namespace App\Utils;
 
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 class ImageManager
@@ -15,6 +16,16 @@ class ImageManager
                         'path' => $path
                     ]);
                 }
+        }
+    }
+
+    public static function deleteImages($post){
+        if($post->images->count() > 0){
+            foreach($post->images as $image){
+                if(File::exists(public_path($image->path))){
+                    File::delete(public_path($image->path));
+                }
+            }
         }
     }
 }

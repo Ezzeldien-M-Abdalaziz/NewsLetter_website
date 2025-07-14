@@ -9,12 +9,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 
 class ProfileController extends Controller
 {
     public function index(){
-        $posts = auth()->user()->posts()->active()->with('images')->get();
+        $posts = auth()->user()->posts()->active()->with('images')->latest()->get();
         return view('frontend.dashboard.profile' , compact('posts'));
     }
 
@@ -60,6 +61,13 @@ class ProfileController extends Controller
         ]);
 
         $post = Post::findOrFail($request->post_id);
+        if(!$post){
+            Session::flash('error', 'Post not found');
+            return back();
+        }
+
+        ImageManager::deleteImages($post);
+
         $post->delete();
         Session::flash('success', 'Post deleted successfully');
         return back();
