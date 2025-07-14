@@ -94,23 +94,23 @@
 
 
 
-                <!-- Posts Section -->
+                <!-- show posts -->
                 <section id="posts" class="posts-section">
                     <h2>Recent Posts</h2>
                     <div class="post-list">
                         <!-- Post Item -->
-                        <div class="post-item mb-4 p-3 border rounded">
+                        @forelse ($posts as $post)
+                            <div class="post-item mb-4 p-3 border rounded">
                             <div class="post-header d-flex align-items-center mb-2">
-                                <img src="" alt="User Image" class="rounded-circle"
+                                <img src="{{asset($post->user->image)}}" alt="User Image" class="rounded-circle"
                                     style="width: 50px; height: 50px;" />
                                 <div class="ms-3">
-                                    <h5 class="mb-0">Salem Taha</h5>
-                                    <small class="text-muted">2 hours ago</small>
+                                    <h5 class="mb-0">{{$post->user->name}}</h5>
+                                    <small class="text-muted">{{ $post->created_at}}</small>
                                 </div>
                             </div>
-                            <h4 class="post-title">Post Title Here</h4>
-                            <p class="post-content">This is an example post content. The user can share their thoughts,
-                                upload images, and more.</p>
+                            <h4 class="post-title">{{$post->title}}</h4>
+                            <p class="post-content">{!! $post->desc !!}</p>
 
                             <div id="newsCarousel" class="carousel slide" data-ride="carousel">
                                 <ol class="carousel-indicators">
@@ -119,27 +119,17 @@
                                     <li data-target="#newsCarousel" data-slide-to="2"></li>
                                 </ol>
                                 <div class="carousel-inner">
-                                    <div class="carousel-item  active">
-                                        <img src="" class="d-block w-100" alt="First Slide">
+                                    @foreach ($post->images as  $image)
+                                        <div class="carousel-item  @if ($loop->first) active @endif">
+                                        <img src="{{ asset($image->path)}}" class="d-block w-100" alt="First Slide">
                                         <div class="carousel-caption d-none d-md-block">
-                                            <h5>dsfdk</h5>
-                                            <p>
-                                                oookok
-                                            </p>
+                                            <h5>{{ $post->title }}</h5>
                                         </div>
                                     </div>
-                                    <div class="carousel-item ">
-                                        <img src="" class="d-block w-100" alt="First Slide">
-                                        <div class="carousel-caption d-none d-md-block">
-                                            <h5>dsfdk</h5>
-                                            <p>
-                                                oookok
-                                            </p>
-                                        </div>
-                                    </div>
-
+                                    @endforeach
                                     <!-- Add more carousel-item blocks for additional slides -->
                                 </div>
+
                                 <a class="carousel-control-prev" href="#newsCarousel" role="button" data-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                     <span class="sr-only">Previous</span>
@@ -183,6 +173,12 @@
                                 <!-- Add more comments here for demonstration -->
                             </div>
                         </div>
+
+                        @empty
+                            <div>
+                                <p>No posts found.</p>
+                            </div>
+                        @endforelse
 
                         <!-- Add more posts here dynamically -->
                     </div>

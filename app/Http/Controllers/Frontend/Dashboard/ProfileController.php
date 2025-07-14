@@ -7,13 +7,15 @@ use Illuminate\Support\Str;
 use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Post;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 
 class ProfileController extends Controller
 {
     public function index(){
-        return view('frontend.dashboard.profile');
+        $posts = auth()->user()->posts()->active()->with('images')->get();
+        return view('frontend.dashboard.profile' , compact('posts'));
     }
 
     public function storePost(PostRequest $request){
