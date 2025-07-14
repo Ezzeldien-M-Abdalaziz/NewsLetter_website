@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Frontend\Dashboard;
 
 use App\Utils\ImageManager;
-use Illuminate\Support\Str;
 use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
-use Flasher\Laravel\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 class ProfileController extends Controller
@@ -57,8 +56,13 @@ class ProfileController extends Controller
 
     public function deletePost(Request $request){
         $request->validate([
+            'post_id' => 'required|exists:posts,id'
+        ]);
 
-        ])
+        $post = Post::findOrFail($request->post_id);
+        $post->delete();
+        Session::flash('success', 'Post deleted successfully');
+        return back();
     }
 
 

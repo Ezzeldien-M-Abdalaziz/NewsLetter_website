@@ -163,6 +163,7 @@
                                     <form id="deleteForm" action="{{route('frontend.dashboard.post.delete')}}" method="POST">
                                         @csrf
                                         @method('DELETE')
+                                        <input hidden name="post_id" type="text" value="{{$post->id}}">
                                     </form>
 
                                 </div>
@@ -205,6 +206,7 @@
                 allowedFileTypes: ['image'],
                 maxFileCount: 5,
                 enableResumableUpload: false,
+                showUpload: false
             });
             $('#postContent').summernote({
                 height: 300,
