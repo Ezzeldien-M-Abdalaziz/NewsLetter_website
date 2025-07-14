@@ -8,6 +8,7 @@ use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use Flasher\Laravel\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 
@@ -47,6 +48,17 @@ class ProfileController extends Controller
 
         Session::flash('success', 'Post created successfully');
         return back();
+    }
+
+
+    public function editPost($slug){
+
+    }
+
+    public function deletePost(Request $request){
+        $request->validate([
+
+        ])
     }
 
 

@@ -40,9 +40,12 @@ Route::group(['as' => 'frontend.',], function () {
 
     //dashboard routes
     Route::prefix('account/')->name('dashboard.')->middleware(['auth:web' , 'verified'])->group(function () {
+        //profile
         Route::controller(ProfileController::class)->group(function () {
             Route::get('profile' , 'index')->name('profile');
             Route::post('post/store' , 'storePost')->name('post.store');
+            Route::get('post/edit/{slug}' , 'editPost')->name('post.edit');
+            Route::delete('post/delete' , 'deletePost')->name('post.delete');
         });
     });
 

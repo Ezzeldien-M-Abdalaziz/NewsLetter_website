@@ -149,15 +149,22 @@
                                 </div>
 
                                 <div>
-                                    <a href="" class="btn btn-sm btn-outline-primary">
+                                    <a href="{{route('frontend.dashboard.post.edit', $post->slug)}}" class="btn btn-sm btn-outline-primary">
                                         <i class="fas fa-edit"></i> Edit
                                     </a>
-                                    <a href="" class="btn btn-sm btn-outline-primary">
+                                    <a href="javascript:void(0);" onclick="if(confirm('Are you sure you want to delete this post?')) document.getElementById('deleteForm').submit()" class="btn btn-sm btn-outline-primary">
                                         <i class="fas fa-thumbs-up"></i> Delete
                                     </a>
+
                                     <button class="btn btn-sm btn-outline-secondary">
                                         <i class="fas fa-comment"></i> Comments
                                     </button>
+
+                                    <form id="deleteForm" action="{{route('frontend.dashboard.post.delete')}}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
+
                                 </div>
                             </div>
 
