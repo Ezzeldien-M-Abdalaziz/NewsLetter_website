@@ -156,7 +156,7 @@
                                         <i class="fas fa-thumbs-up"></i> Delete
                                     </a>
 
-                                    <button class="btn btn-sm btn-outline-secondary">
+                                    <button class="getComments" post-id = "{{$post->id}}" class="btn btn-sm btn-outline-secondary">
                                         <i class="fas fa-comment"></i> Comments
                                     </button>
 
@@ -212,5 +212,36 @@
                 height: 300,
             });
         });
+
+        //get post comments
+        $(document).on('click', '.getComments', function(e) {
+            e.preventDefault();
+            var postId = $(this).attr('post-id');
+            var url = "{{ route('frontend.dashboard.post.getComments', ':postId') }}";
+            url = url.replace(':postId', postId);
+
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function(response) {
+                    let commentsContainer = $('.comments');
+                    commentsContainer.empty(); // Clear previous comments
+
+                    response.comments.forEach(comment => {
+                        let commentHtml = `
+                            <div class="comment">
+                                <img src="" alt="User Image" class="comment-img" />
+                                <div class="comment-content">
+                                    <span class="username">${comment.user.name}</span>
+                                    <p class="comment-text">${comment.comment}</p>
+                                </div>
+                            </div>
+                        `;
+                        commentsContainer.append(commentHtml);
+                    });
+                }
+            });
+        });
+
     </script>
 @endpush

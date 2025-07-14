@@ -46,6 +46,7 @@ Route::group(['as' => 'frontend.',], function () {
             Route::post('post/store' , 'storePost')->name('post.store');
             Route::get('post/edit/{slug}' , 'editPost')->name('post.edit');
             Route::delete('post/delete' , 'deletePost')->name('post.delete');
+            Route::get('post/get-comments/{postId}' , 'getComments')->name('post.getComments');
         });
     });
 

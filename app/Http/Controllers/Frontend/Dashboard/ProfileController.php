@@ -69,6 +69,22 @@ class ProfileController extends Controller
         return back();
     }
 
+    public function getComments($postId){
+        $post = Post::findOrFail(id: $postId);
+        $comments = $post->comments()->with('user')->get();
+        if(!$comments){
+            return response()->json([
+                'status' => false,
+                'message' => 'Comments not found'
+            ]);
+        }
+        return response()->json([
+            'status' => true,
+            'comments' => $comments,
+            'message' => 'Comments found'
+        ]);
+    }
+
 
 
 }
