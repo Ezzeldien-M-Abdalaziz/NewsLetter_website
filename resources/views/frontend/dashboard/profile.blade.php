@@ -110,7 +110,7 @@
                                 </div>
                             </div>
                             <h4 class="post-title">{{$post->title}}</h4>
-                            <p class="post-content">{!! $post->desc !!}</p>
+                            <p class="post-content">{!! chunk_split($post->desc, 50) !!}</p>
 
                             <div id="newsCarousel" class="carousel slide" data-ride="carousel">
                                 <ol class="carousel-indicators">

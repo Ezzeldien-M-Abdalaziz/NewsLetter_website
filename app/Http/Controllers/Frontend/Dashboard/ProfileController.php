@@ -61,10 +61,6 @@ class ProfileController extends Controller
         ]);
 
         $post = Post::findOrFail($request->post_id);
-        if(!$post){
-            Session::flash('error', 'Post not found');
-            return back();
-        }
 
         ImageManager::deleteImages($post);
 
