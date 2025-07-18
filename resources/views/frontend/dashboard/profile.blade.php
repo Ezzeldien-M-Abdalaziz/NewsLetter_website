@@ -170,7 +170,7 @@
                             </div>
 
                             <!-- Display Comments -->
-                            <div class="comments">
+                            <div id="displayComments" class="comments">
                                 <div class="comment">
                                     <img src="" alt="User Image" class="comment-img" />
                                     <div class="comment-content">
@@ -224,13 +224,13 @@
                 type: 'GET',
                 url: url,
                 success: function(response) {
-                    let commentsContainer = $('.comments');
+                    let commentsContainer = $('#displayComments');
                     commentsContainer.empty(); // Clear previous comments
 
                     response.comments.forEach(comment => {
                         let commentHtml = `
                             <div class="comment">
-                                <img src="" alt="User Image" class="comment-img" />
+                                <img src="${comment.user.image}" alt="User Image" class="comment-img" />
                                 <div class="comment-content">
                                     <span class="username">${comment.user.name}</span>
                                     <p class="comment-text">${comment.comment}</p>
