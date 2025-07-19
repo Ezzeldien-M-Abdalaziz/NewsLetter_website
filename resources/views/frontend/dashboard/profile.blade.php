@@ -156,8 +156,12 @@
                                         <i class="fas fa-thumbs-up"></i> Delete
                                     </a>
 
-                                    <button class="getComments" post-id = "{{$post->id}}" class="btn btn-sm btn-outline-secondary">
+                                    <button id="commentbtn_{{$post->id}}" class="getComments" post-id = "{{$post->id}}" class="btn btn-sm btn-outline-secondary">
                                         <i class="fas fa-comment"></i> Comments
+                                    </button>
+
+                                    <button id="hidecommentsbtn_{{$post->id}}" style="display: none" class="hideComments" post-id = "{{$post->id}}" class="btn btn-sm btn-outline-secondary">
+                                        <i class="fas fa-comment"></i> Hide Comments
                                     </button>
 
                                     <form id="deleteForm_{{$post->id}}" action="{{route('frontend.dashboard.post.delete')}}" method="POST">
@@ -170,7 +174,7 @@
                             </div>
 
                             <!-- Display Comments -->
-                            <div id="displayComments" class="comments">
+                            <div id="displayComments_{{$post->id}}" class="comments">
                                 <div class="comment">
                                     <img src="" alt="User Image" class="comment-img" />
                                     <div class="comment-content">
@@ -224,7 +228,8 @@
                 type: 'GET',
                 url: url,
                 success: function(response) {
-                    let commentsContainer = $('#displayComments');
+                    let commentsContainer = $('#displayComments_' + postId);
+                    commentsContainer.show();
                     commentsContainer.empty(); // Clear previous comments
 
                     response.comments.forEach(comment => {
@@ -239,9 +244,20 @@
                         `;
                         commentsContainer.append(commentHtml);
                     });
+                    $('#commentbtn_' + postId).hide();
+                    $('#hidecommentsbtn_' + postId).show();
                 }
             });
         });
+
+        //hide comments
+                $(document).on('click', '.hideComments', function(e) {
+                    e.preventDefault();
+                    var postId = $(this).attr('post-id');
+                    $('#displayComments_' + postId).hide();
+                    $('#commentbtn_' + postId).show();
+                    $('#hidecommentsbtn_' + postId).hide();
+                });
 
     </script>
 @endpush
