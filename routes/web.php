@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Frontend\CategoryController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\Dashboard\ProfileController;
+use App\Http\Controllers\Frontend\Dashboard\SettingController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\NewSubscriberController;
 use App\Http\Controllers\Frontend\PostController;
@@ -40,15 +41,25 @@ Route::group(['as' => 'frontend.',], function () {
 
     //dashboard routes
     Route::prefix('account/')->name('dashboard.')->middleware(['auth:web' , 'verified'])->group(function () {
-        //profile
+        //profile routes
         Route::controller(ProfileController::class)->group(function () {
-            Route::get('profile' , 'index')->name('profile');
+            Route::get('profile' , action: 'index')->name('profile');
             Route::post('post/store' , 'storePost')->name('post.store');
             Route::get('post/edit/{slug}' , 'editPost')->name('post.edit');
             Route::delete('post/delete' , 'deletePost')->name('post.delete');
             Route::get('post/get-comments/{postId}' , 'getComments')->name('post.getComments');
         });
+
+        //settings controller
+        Route::controller(SettingController::class)->group(function () {
+            Route::get('setting' , 'index')->name('setting');
+            Route::post('setting/update' , 'update')->name('setting.update');
+            // Route::get('setting' , 'index')->name('setting');
+        });
+
+
     });
+
 
 });
 
