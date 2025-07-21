@@ -10,7 +10,7 @@ class ImageManager
     {
         if($request->hasFile('images')){
                 foreach($request->file('images') as $image){
-                    $path = self::storeImageInLocal($image , 'uploads/posts');
+                    $path = self::storeImageInLocal($image , 'posts');
                     $post->images()->create([
                         'path' => $path
                     ]);
@@ -20,7 +20,7 @@ class ImageManager
         //one image
         if($request->hasFile('image')){
             self::deleteImageFromLocal($user->image);
-            $path = self::storeImageInLocal($request->file('image') , 'uploads/users');
+            $path = self::storeImageInLocal($request->file('image') , 'users');
             $user->update([
                 'image' => $path
             ]);
@@ -42,7 +42,7 @@ class ImageManager
 
     private static function storeImageInLocal($file , $path){
         $newName = self::generateImageName($file);
-        $path = $file->storeAs($path, $newName , ['disk' => 'uploads']);
+        $path = $file->storeAs('uploads/'.$path, $newName , ['disk' => 'uploads']);
         return $path;
     }
 
