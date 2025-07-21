@@ -19,6 +19,7 @@ class ImageManager
 
         //one image
         if($request->hasFile('image')){
+            self::deleteImageFromLocal($user->image);
             $path = self::storeImageInLocal($request->file('image') , 'uploads/users');
             $user->update([
                 'image' => $path
@@ -29,18 +30,11 @@ class ImageManager
     public static function deleteImages($post){
         if($post->images->count() > 0){
             foreach($post->images as $image){
-                if(File::exists(public_path($image->path))){
-                    File::delete(public_path($image->path));
-                }
+                self::deleteImageFromLocal($image->path);
+                $image->delete();
             }
         }
     }
-
-    public static function deleteUserImage($user) {
-    if ($user->image && File::exists(public_path($user->image))) {
-        File::delete(public_path($user->image));
-    }
-}
 
     private static function generateImageName($file){
         return Str::uuid() . '-' . time() . '.' . $file->getClientOriginalExtension();
@@ -50,5 +44,11 @@ class ImageManager
         $newName = self::generateImageName($file);
         $path = $file->storeAs($path, $newName , ['disk' => 'uploads']);
         return $path;
+    }
+
+    private static function deleteImageFromLocal($path){
+        if(File::exists(public_path($path))){
+            File::delete(public_path($path));
+        }
     }
 }
