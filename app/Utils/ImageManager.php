@@ -6,16 +6,23 @@ use Illuminate\Support\Str;
 
 class ImageManager
 {
-    public static function uploadImages($post, $request)
+    public static function uploadImages($request , $post=null , $user=null)
     {
         if($request->hasFile('images')){
                 foreach($request->file('images') as $image){
-                    $file = Str::uuid() . '-' . time() . '.' . $image->getClientOriginalExtension();
-                    $path = $image->storeAs('uploads/posts', $file , ['disk' => 'uploads']);
+                    $path = self::storeImageInLocal($image , 'uploads/posts');
                     $post->images()->create([
                         'path' => $path
                     ]);
                 }
+        }
+
+        //one image
+        if($request->hasFile('image')){
+            $path = self::storeImageInLocal($request->file('image') , 'uploads/users');
+            $user->update([
+                'image' => $path
+            ]);
         }
     }
 
@@ -27,5 +34,21 @@ class ImageManager
                 }
             }
         }
+    }
+
+    public static function deleteUserImage($user) {
+    if ($user->image && File::exists(public_path($user->image))) {
+        File::delete(public_path($user->image));
+    }
+}
+
+    private static function generateImageName($file){
+        return Str::uuid() . '-' . time() . '.' . $file->getClientOriginalExtension();
+    }
+
+    private static function storeImageInLocal($file , $path){
+        $newName = self::generateImageName($file);
+        $path = $file->storeAs($path, $newName , ['disk' => 'uploads']);
+        return $path;
     }
 }

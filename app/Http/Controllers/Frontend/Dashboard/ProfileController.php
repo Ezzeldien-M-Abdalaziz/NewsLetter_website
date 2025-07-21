@@ -34,7 +34,7 @@ class ProfileController extends Controller
             $post = auth()->user()->posts()->create($request->except('_token' , 'images')); //token is sent by the form by default , so we need to remove it because it is not a field in the database
 
             //upload images
-            ImageManager::uploadImages($post, $request);
+            ImageManager::uploadImages($request, $post);
             DB::commit();
 
             //forget the read more posts cache to refresh it and show the new post ,, this is optional if u want the new posts immediately
