@@ -51,10 +51,10 @@ Route::group(['as' => 'frontend.',], function () {
         });
 
         //settings controller
-        Route::controller(SettingController::class)->group(function () {
-            Route::get('setting' , 'index')->name('setting');
-            Route::post('setting/update' , 'update')->name('setting.update');
-            // Route::get('setting' , 'index')->name('setting');
+        Route::prefix('setting')->controller(SettingController::class)->group(function () {
+            Route::get('/' , 'index')->name('setting');
+            Route::post('/update' , 'update')->name('setting.update');
+            Route::post('/change-password' , 'changePassword')->name('setting.changePassword');
         });
 
 

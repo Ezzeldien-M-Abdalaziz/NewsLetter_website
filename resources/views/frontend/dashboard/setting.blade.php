@@ -148,13 +148,14 @@
           </form>
 
           <!-- Form to change the password -->
-          <form class="change-password-form">
+          <form action="{{route('frontend.dashboard.setting.changePassword')}}" method="POST" class="change-password-form">
+            @csrf
             <h2>Change Password</h2>
             <div class="form-group">
               <label for="current-password">Current Password:</label>
               <input
                 type="password"
-                name="password"
+                name="current_password"
                 id="current-password"
                 placeholder="Enter Current Password"
               />
@@ -163,7 +164,7 @@
               <label for="new-password">New Password:</label>
               <input
                 type="password"
-
+                name="password"
                 id="new-password"
                 placeholder="Enter New Password"
               />
@@ -172,6 +173,7 @@
               <label for="confirm-password">Confirm New Password:</label>
               <input
                 type="password"
+                name="password_confirmation"
                 id="confirm-password"
                 placeholder="Enter Confirm New "
               />

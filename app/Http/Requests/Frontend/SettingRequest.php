@@ -32,7 +32,6 @@ class SettingRequest extends FormRequest
             'city' => ['required', 'string', 'max:50'],
             'street' => ['required', 'max:50'],
             'image' => ['nullable' , 'image' , 'mimes:jpeg,png,jpg,gif,svg' , 'max:2048'],
-            // 'password' => ['required', 'string', 'min:8', 'max:50'],
         ];
     }
 }
