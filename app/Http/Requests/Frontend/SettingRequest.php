@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Frontend;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class SettingRequest extends FormRequest
 {
@@ -23,14 +24,15 @@ class SettingRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'min:3', 'max:50'],
-            'username' => ['required', 'min:3', 'max:50'],
-            'email' => ['required', 'email'],
-            // 'password' => ['required', 'string', 'min:8', 'max:50'],
-            // 'image' => ['required' , 'image' , 'mimes:jpeg,png,jpg,gif,svg' , 'max:2048'],
-            'phone' => ['required', 'numeric'],
+            // 'username' => ['required', 'min:3', 'max:50' , 'unique:users,username,'.$this->user()->id], // that chaining way
+            'username' => ['required', 'min:3', 'max:50' , Rule::unique('users' , 'username')->ignore($this->user()->id)], //cleaner way
+            'email' => ['required', 'email' , Rule::unique('users' , 'email')->ignore($this->user()->id)],
+            'phone' => ['required', 'numeric' , Rule::unique('users' , 'phone')->ignore($this->user()->id)],
             'country' => ['required', 'string', 'max:50'],
             'city' => ['required', 'string', 'max:50'],
             'street' => ['required', 'max:50'],
+            'image' => ['nullable' , 'image' , 'mimes:jpeg,png,jpg,gif,svg' , 'max:2048'],
+            // 'password' => ['required', 'string', 'min:8', 'max:50'],
         ];
     }
 }
