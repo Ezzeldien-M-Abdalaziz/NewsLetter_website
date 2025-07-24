@@ -86,5 +86,17 @@ class ProfileController extends Controller
     }
 
 
+    public function showEditForm($slug){
+        $post = Post::with('images')->whereSlug($slug)->first();
+        if(!$post){
+            abort(404);
+        }
+        return view('frontend.dashboard.edit-post' , compact('post'));
+    }
+
+    public function updatePost(PostRequest $request){
+        $request->validated();
+    }
+
 
 }
