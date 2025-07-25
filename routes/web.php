@@ -50,6 +50,7 @@ Route::group(['as' => 'frontend.',], function () {
 
             Route::get('post/edit/{slug}' , 'showEditForm')->name('post.edit');
             Route::put('post/update' , 'updatePost')->name('post.update');
+            Route::post('post/image/delete' , 'deletePostImage')->name('post.delete-image');
         });
 
         //settings controller

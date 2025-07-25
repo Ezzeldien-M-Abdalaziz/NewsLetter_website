@@ -32,75 +32,99 @@
   <!-- Main Content -->
   <div class="main-content col-md-9">
     <!-- Show/Edit Post Section -->
-    <section id="posts-section" class="posts-section">
-      <h2>Your Post</h2>
-      <ul class="list-unstyled user-posts">
-        <!-- Example of a Post Item -->
-        <li class="post-item">
-          <!-- Editable Title -->
-          <input name="title" type="text" class="form-control mb-2 post-title" value="{{$post->title}}" />
+        <form action="{{route('frontend.dashboard.post.update')}}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
 
-          <!-- Editable Content -->
-          <textarea name="desc" class="form-control mb-2 post-content">
-                {!! $post->desc !!}
-            </textarea>
+            <section id="posts-section" class="posts-section">
+            <h2>Your Post</h2>
+            <ul class="list-unstyled user-posts">
+                <!-- Example of a Post Item -->
+                <li class="post-item">
+                <!-- Editable Title -->
+                <input name="title" type="text" class="form-control mb-2 post-title" value="{{$post->title}}" />
 
-          <!-- Post Images Slider -->
-          <div class="tn-slider">
-            <div class="slick-slider edit-slider" id="postImages">
-              @foreach ($post->images as $image)
-              <div class="tn-img">
-                <img src="{{asset( $image->path)}}" />
-              </div>
-              @endforeach
-            </div>
-          </div>
+                <!-- Editable Content -->
+                <textarea id="post-content" name="desc" class="form-control mb-2 post-content">
+                        {!! $post->desc !!}
+                    </textarea>
 
-          <!-- Image Upload Input for Editing -->
-          <input name="images[]" type="file" class="form-control mt-2 edit-post-image" accept="image/*" multiple />
 
-          <!-- Editable Category Dropdown -->
-          <select class="form-control mb-2 post-category">
-            @foreach ($categories as $category)
-                <option value="{{$category->id}}" @selected($post->category_id == $category->id)> {{$category->name}} </option>
-            @endforeach
-          </select>
+                <!-- Image Upload Input for Editing -->
+                <input id="post-images" name="images[]" type="file" class="form-control mt-2 edit-post-image" accept="image/*" multiple />
 
-          <!-- Editable Enable Comments Checkbox -->
-          <div class="form-check mb-2">
-            <input name="comment_able" class="form-check-input enable-comments" type="checkbox" @checked($post->comment_able) />
-            <label class="form-check-label">
-              Enable Comments
-            </label>
-          </div>
+                <!-- Editable Category Dropdown -->
+                <select class="form-control mb-2 post-category">
+                    @foreach ($categories as $category)
+                        <option value="{{$category->id}}" @selected($post->category_id == $category->id)> {{$category->name}} </option>
+                    @endforeach
+                </select>
 
-          <!-- Post Meta: Views and Comments -->
-          <div class="post-meta d-flex justify-content-between">
-            <span class="views">
-              <i class="bi bi-eye"></i> {{$post->num_of_views}}
-            </span>
-            <span class="post-comments">
-              <i class="fas fa-comment"></i> {{$post->comments->count()}}
-            </span>
-          </div>
+                <!-- Editable Enable Comments Checkbox -->
+                <div class="form-check mb-2">
+                    <input name="comment_able" class="form-check-input enable-comments" type="checkbox" @checked($post->comment_able) />
+                    <label class="form-check-label">
+                    Enable Comments
+                    </label>
+                </div>
 
-          <!-- Post Actions -->
-          <div class="post-actions mt-2">
-            <button class="btn btn-primary edit-post-btn">Edit</button>
-            <a href="" class="btn btn-danger delete-post-btn">Delete</a>
-            <button class="btn btn-success save-post-btn d-none">
-              Save
-            </button>
-            <button class="btn btn-secondary cancel-edit-btn d-none">
-              Cancel
-            </button>
-          </div>
+                <!-- Post Meta: Views and Comments -->
+                <div class="post-meta d-flex justify-content-between">
+                    <span class="views">
+                    <i class="fas fa-eye"></i> {{$post->num_of_views}}
+                    </span>
+                    <span class="post-comments">
+                    <i class="fas fa-comment"></i> {{$post->comments->count()}}
+                    </span>
+                </div>
 
-        </li>
-        <!-- Additional posts will be added dynamically -->
-      </ul>
-    </section>
+                <!-- Post Actions -->
+                <div class="post-actions mt-2">
+                    <button type="submit" class="btn btn-success save-post-btn">
+                        Save
+                    </button>
+                    <a href="{{route('frontend.dashboard.profile')}}" class="btn btn-secondary cancel-edit-btn">
+                        Cancel
+                    </a>
+                </div>
+                </li>
+                <!-- Additional posts will be added dynamically -->
+            </ul>
+            </section>
+    </form>
   </div>
 </div>
 
 @endsection
+
+@push('js')
+    <script>
+        $('#post-images').fileinput({
+            theme: 'fa5',
+            allowedFileTypes: ['image'],
+            maxFileCount: 5,
+            enableResumableUpload: false,
+            showUpload: false,
+            initialPreviewAsData: true,
+            initialPreview:[
+                @if($post->images->count() > 0)
+                    @foreach ($post->images as $image)
+                        "{{asset( $image->path)}}",
+                    @endforeach
+                @endif
+            ],
+            initialPreviewConfig: [{
+                caption: 'desert.jpg',
+                width: '120px',
+                url: '{{route('frontend.dashboard.post.delete-image', $post->id)}}',
+                key: 1
+            }]
+
+        });
+
+        //summernote
+        $('#post-content').summernote({
+            height: 300,
+        });
+    </script>
+@endpush

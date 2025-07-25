@@ -36,6 +36,10 @@ class ImageManager
         }
     }
 
+
+
+    //private functions
+    //seperated for clarity
     private static function generateImageName($file){
         return Str::uuid() . '-' . time() . '.' . $file->getClientOriginalExtension();
     }

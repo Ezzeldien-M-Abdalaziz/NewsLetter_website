@@ -95,8 +95,26 @@ class ProfileController extends Controller
         return view('frontend.dashboard.edit-post' , compact('post'));
     }
 
+
+
     public function updatePost(PostRequest $request){
         $request->validated();
+        $post = Post::findOrFail($request->post_id);
+        $post->update($request->except('_token' , 'images'));
+        ImageManager::uploadImages($request , $post);
+        Session::flash('success', 'Post updated successfully');
+        return back();
+    }
+
+    public function deletePostImage(Request $request){
+        $request->validate([
+            'image_id' => 'required|exists:images,id'
+        ]);
+        $image = ImageManager::deleteImage($request->image_id);
+        return response()->json([
+            'status' => true,
+            'message' => 'Image deleted successfully'
+        ]);
     }
 
 
