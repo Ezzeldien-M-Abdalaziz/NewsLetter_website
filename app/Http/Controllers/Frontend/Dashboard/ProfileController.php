@@ -6,6 +6,7 @@ use App\Utils\ImageManager;
 use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
