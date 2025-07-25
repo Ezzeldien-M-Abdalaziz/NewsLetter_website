@@ -7,6 +7,7 @@ use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Image;
 use App\Models\Post;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
@@ -107,12 +108,21 @@ class ProfileController extends Controller
     }
 
     public function deletePostImage(Request $request){
-        $request->validate([
-            'image_id' => 'required|exists:images,id'
-        ]);
-        $image = ImageManager::deleteImage($request->image_id);
+        $image = Image::find($request->key);
+        if(!$image){
+            return response()->json([
+                'status' => false,
+                'message' => 'Image not found'
+            ]);
+        }
+
+        if(File::exists(public_path($image->path))){
+            File::delete(public_path($image->path));
+            $image->delete();
+        }
+
         return response()->json([
-            'status' => true,
+            'status' => 200,
             'message' => 'Image deleted successfully'
         ]);
     }

@@ -113,12 +113,18 @@
                     @endforeach
                 @endif
             ],
-            initialPreviewConfig: [{
-                caption: 'desert.jpg',
-                width: '120px',
-                url: '{{route('frontend.dashboard.post.delete-image', $post->id)}}',
-                key: 1
-            }]
+            initialPreviewConfig: [
+                @if($post->images->count() > 0)
+                    @foreach ($post->images as $image)
+                        {
+                            caption:"",
+                            width:'120px',
+                            url:"{{route('frontend.dashboard.post.delete-image', [$image->id , '_token' => csrf_token()])}}",
+                            key:"{{$image->id}}",
+                        },
+                    @endforeach
+                @endif
+            ]
 
         });
 
