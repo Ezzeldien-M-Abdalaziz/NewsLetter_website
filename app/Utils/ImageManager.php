@@ -36,6 +36,12 @@ class ImageManager
         }
     }
 
+    public static function deleteImageFromLocal($path){
+        if(File::exists(public_path($path))){
+            File::delete(public_path($path));
+        }
+    }
+
 
 
     //private functions
@@ -50,9 +56,5 @@ class ImageManager
         return $path;
     }
 
-    private static function deleteImageFromLocal($path){
-        if(File::exists(public_path($path))){
-            File::delete(public_path($path));
-        }
-    }
+
 }

@@ -116,10 +116,8 @@ class ProfileController extends Controller
             ]);
         }
 
-        if(File::exists(public_path($image->path))){
-            File::delete(public_path($image->path));
-            $image->delete();
-        }
+        ImageManager::deleteImageFromLocal($image->path);
+        $image->delete();
 
         return response()->json([
             'status' => 200,
