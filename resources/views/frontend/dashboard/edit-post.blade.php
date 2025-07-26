@@ -29,8 +29,17 @@
     </div>
   </aside>
 
+
   <!-- Main Content -->
   <div class="main-content col-md-9">
+
+    @if(session()->has('error'))
+        <div class="alert alert-danger">
+            @foreach (session('errors') as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </div>
+    @endif
     <!-- Show/Edit Post Section -->
         <form action="{{route('frontend.dashboard.post.update')}}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -41,6 +50,7 @@
             <ul class="list-unstyled user-posts">
                 <!-- Example of a Post Item -->
                 <li class="post-item">
+                    <input type="hidden" name="post_id" value="{{$post->id}}">
                 <!-- Editable Title -->
                 <input name="title" type="text" class="form-control mb-2 post-title" value="{{$post->title}}" />
 
@@ -54,7 +64,7 @@
                 <input id="post-images" name="images[]" type="file" class="form-control mt-2 edit-post-image" accept="image/*" multiple />
 
                 <!-- Editable Category Dropdown -->
-                <select class="form-control mb-2 post-category">
+                <select name="category_id" class="form-control mb-2 post-category">
                     @foreach ($categories as $category)
                         <option value="{{$category->id}}" @selected($post->category_id == $category->id)> {{$category->name}} </option>
                     @endforeach

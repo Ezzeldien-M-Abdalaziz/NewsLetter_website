@@ -99,9 +99,14 @@ class ProfileController extends Controller
 
 
     public function updatePost(PostRequest $request){
+        // return $request->all();
         $request->validated();
-        $post = Post::findOrFail($request->post_id);
-        $post->update($request->except('_token' , 'images'));
+        $post = Post::find($request->post_id);
+        if(!$post){
+            return back()->with('error', 'Post not found');
+        }
+        $request->comment_able == "on" ? $request->merge(['comment_able' => 1]) : $request->merge(['comment_able' => 0]);   // overwrite the value of the comment_able field
+        $post->update($request->except('_token' , 'images' , '_method' , 'post_id'));
         ImageManager::uploadImages($request , $post);
         Session::flash('success', 'Post updated successfully');
         return back();
