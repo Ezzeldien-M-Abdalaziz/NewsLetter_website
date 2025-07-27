@@ -40,6 +40,7 @@
             @endforeach
         </div>
     @endif
+
     <!-- Show/Edit Post Section -->
         <form action="{{route('frontend.dashboard.post.update')}}" method="POST" enctype="multipart/form-data">
             @csrf
