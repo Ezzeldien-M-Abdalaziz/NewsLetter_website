@@ -18,7 +18,7 @@
             class="rounded-circle mb-2"
             style="width: 80px; height: 80px; object-fit: cover"
           />
-          <h5 class="mb-0" style="color: #ff6f61">Salem Taha</h5>
+          <h5 class="mb-0" style="color: #ff6f61">{{auth()->user()->name}}</h5>
         </div>
 
         <!-- Sidebar Menu -->
@@ -31,7 +31,7 @@
             <i class="fas fa-user"></i> Profile
           </a>
           <a
-            href="./notifications.html"
+            href="{{route('frontend.dashboard.notification')}}"
             class="list-group-item list-group-item-action menu-item"
             data-section="notifications"
           >

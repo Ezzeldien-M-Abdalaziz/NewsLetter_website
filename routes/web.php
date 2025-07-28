@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Frontend\CategoryController;
 use App\Http\Controllers\Frontend\ContactController;
+use App\Http\Controllers\Frontend\Dashboard\NotificationController;
 use App\Http\Controllers\Frontend\Dashboard\ProfileController;
 use App\Http\Controllers\Frontend\Dashboard\SettingController;
 use App\Http\Controllers\Frontend\HomeController;
@@ -60,7 +61,10 @@ Route::group(['as' => 'frontend.',], function () {
             Route::post('/change-password' , 'changePassword')->name('setting.changePassword');
         });
 
-
+        //notification controller
+        Route::prefix('notification')->controller(NotificationController::class)->group(function () {
+            Route::get('/' , 'index')->name('notification');
+        });
 
     });
 
