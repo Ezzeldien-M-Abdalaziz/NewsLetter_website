@@ -99,7 +99,6 @@ class ProfileController extends Controller
 
 
     public function updatePost(PostRequest $request){
-        // return $request->all();
         $request->validated();
         $post = Post::find($request->post_id);
         if(!$post){
