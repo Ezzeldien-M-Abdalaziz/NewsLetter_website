@@ -49,12 +49,19 @@
         <!-- Main Content -->
         <div class="main-content">
             <div class="container">
-                <h2 class="mb-4">Notifications</h2>
+                <div class="row">
+                    <div class="col-6">
+                        <h2 class="mb-4">Notifications</h2>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn btn-sm btn-danger">Clear All</a>
+                    </div>
+                </div>
                <a href="">
                 <div class="notification alert alert-info">
                     <strong>Info!</strong> This is an informational notification.
                     <div class="float-right">
-                        <button class="btn btn-danger btn-sm">Delete</button>
+                        <button style="margin-left: 250px" class="btn btn-danger btn-sm">Delete</button>
                     </div>
                 </div>
                </a>
