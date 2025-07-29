@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Post;
+use App\Models\User;
+use App\Notifications\newCommentNotify;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -49,7 +51,14 @@ class PostController extends Controller
             'ip_address' => $request->ip()
         ]);
 
-        $comment->load('user');  //to load the relationship
+        //send notofication
+        $post = Post::findOrFail($request->post_id);
+        $user = $post->user;
+        $user->notify(new newCommentNotify($comment, $post));
+        //end notofication
+
+        //to eager load the relationship
+        $comment->load('user');
 
         if(!$comment){
             return response()->json([
