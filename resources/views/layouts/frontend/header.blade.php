@@ -86,6 +86,7 @@
                     </div>
                     <div class="social ml-auto">
                         <!-- Notification Dropdown -->
+                        @auth
                         <a href="#" class="nav-link dropdown-toggle" id="notificationDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-bell"></i>
@@ -98,7 +99,7 @@
                             @forelse (auth()->user()->unreadNotifications as $notification)
                                 <div class="dropdown-item d-flex justify-content-between align-items-center">
 
-                                <span>new comment on post : {{$notification->data['post_title']}}</span>
+                                <span> <a href="{{$notification->data['link']}}">Post Comment: {{ substr($notification->data['post_title'] , 4  ) }}</a></span>
                                 <form action="" method="POST">
                                     <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                 </form>
@@ -110,6 +111,9 @@
                             <!-- <div class="dropdown-item text-center">No notifications</div>  -->
 
                         </div>
+                        @endauth
+
+
                         <a href="{{ $getSetting->twitter }}" title="Twitter"><i class="fab fa-twitter"></i></a>
                         <a href="{{ $getSetting->facebook }}" title="Facebook"><i class="fab fa-facebook-f"></i></a>
                         <a href="{{ $getSetting->linkedin }}" title="Linkedin"><i class="fab fa-linkedin-in"></i></a>
