@@ -89,18 +89,23 @@
                         <a href="#" class="nav-link dropdown-toggle" id="notificationDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-bell"></i>
-                            <span class="badge badge-danger">99</span>
+                            <span class="badge badge-danger">{{auth()->user()->unreadNotifications->count()}}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notificationDropdown"
                             style="width: 300px;">
                             <h6 class="dropdown-header">Notifications</h6>
 
-                            <div class="dropdown-item d-flex justify-content-between align-items-center">
-                                <span>new comment</span>
+                            @forelse (auth()->user()->unreadNotifications as $notification)
+                                <div class="dropdown-item d-flex justify-content-between align-items-center">
+
+                                <span>new comment on post : {{$notification->data['post_title']}}</span>
                                 <form action="" method="POST">
                                     <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                 </form>
                             </div>
+
+                            @empty
+                            @endforelse
 
                             <!-- <div class="dropdown-item text-center">No notifications</div>  -->
 
