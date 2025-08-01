@@ -99,7 +99,7 @@
                             @forelse (auth()->user()->unreadNotifications as $notification)
                                 <div class="dropdown-item d-flex justify-content-between align-items-center">
 
-                                <span> <a href="{{$notification->data['link']}}">Post Comment: {{ substr($notification->data['post_title'] , 4  ) }}</a></span>
+                                <span> <a href="{{$notification->data['link']}}?notification={{$notification->id}}">Post Comment: {{ substr($notification->data['post_title'] , 4  ) }}</a></span>
                                 <form action="" method="POST">
                                     <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                 </form>
@@ -108,7 +108,7 @@
                             @empty
                             @endforelse
 
-                            <!-- <div class="dropdown-item text-center">No notifications</div>  -->
+                            <!-- <div class="dropdown-item text-center">No not  ifications</div>  -->
 
                         </div>
                         @endauth
