@@ -63,7 +63,7 @@ Route::group(['as' => 'frontend.',], function () {
 
         //notification controller
         Route::prefix('notification')->controller(NotificationController::class)->group(function () {
-            Route::get('/' , 'index')->name('notification');
+            Route::get('/' , 'index')->name('notification'); //notification here is a
         });
 
     });

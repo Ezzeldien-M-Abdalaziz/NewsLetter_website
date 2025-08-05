@@ -54,33 +54,24 @@
                         <h2 class="mb-4">Notifications</h2>
                     </div>
                     <div class="col-6">
-                        <button class="btn btn-sm btn-danger">Clear All</a>
+                        <button style="margin-left: 250px" class="btn btn-sm btn-danger">Delete All</button>
                     </div>
                 </div>
-               <a href="">
-                <div class="notification alert alert-info">
-                    <strong>Info!</strong> This is an informational notification.
-                    <div class="float-right">
-                        <button style="margin-left: 250px" class="btn btn-danger btn-sm">Delete</button>
-                    </div>
-                </div>
-               </a>
-               <a href="">
-                <div class="notification alert alert-warning">
-                    <strong>Warning!</strong> This is a warning notification.
-                    <div class="float-right">
-                        <button class="btn btn-danger btn-sm">Delete</button>
-                    </div>
-                </div>
-               </a>
-               <a href="">
-                <div class="notification alert alert-success">
-                    <strong>Success!</strong> This is a success notification.
-                    <div class="float-right">
-                        <button class="btn btn-danger btn-sm">Delete</button>
-                    </div>
-                </div>
-               </a>
+                @forelse(auth()->user()->notifications as $notification)
+                    <a href="{{$notification->data['link']}}?notification={{$notification->id}}">
+                        <div class="notification alert alert-info">
+                            <strong>You have a notification from : {{ $notification->data['user_name'] }}</strong> Post title : {{$notification->data['post_title']}}
+                            <div class="float-right">
+                                <button class="btn btn-danger btn-sm">Delete</button>
+                            </div>
+                        </div>
+                    </a>
+                @empty
+                    <div class="alert-info">
+                        No Notification
+
+                @endforelse
+
             </div>
         </div>
       </div>

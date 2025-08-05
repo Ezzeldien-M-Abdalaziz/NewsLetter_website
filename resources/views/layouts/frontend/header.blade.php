@@ -106,9 +106,8 @@
                             </div>
 
                             @empty
+                                <div class="dropdown-item text-center">No Notifications</div>
                             @endforelse
-
-                            <!-- <div class="dropdown-item text-center">No not  ifications</div>  -->
 
                         </div>
                         @endauth
