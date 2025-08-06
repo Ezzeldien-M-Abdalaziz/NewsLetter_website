@@ -16,7 +16,6 @@ class checkNotificationReadAt
     public function handle(Request $request, Closure $next): Response
     {
         if($request->query('notification')){
-
             $notification = auth()->user()->unreadNotifications()->where('id' , $request->query('notification'))->first();
             if($notification){
                 $notification->markAsRead();

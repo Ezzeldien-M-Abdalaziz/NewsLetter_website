@@ -51,11 +51,13 @@ class PostController extends Controller
             'ip_address' => $request->ip()
         ]);
 
-        //send notofication
+        //send notification
         $post = Post::findOrFail($request->post_id);
         $user = $post->user;
-        $user->notify(new newCommentNotify($comment, $post));
-        //end notofication
+        if($user->id != $comment->user_id){
+            $user->notify(new newCommentNotify($comment, $post));
+        }
+        //end notification
 
         //to eager load the relationship
         $comment->load('user');
