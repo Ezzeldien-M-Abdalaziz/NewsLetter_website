@@ -54,7 +54,10 @@
                         <h2 class="mb-4">Notifications</h2>
                     </div>
                     <div class="col-6">
-                        <button style="margin-left: 250px" class="btn btn-sm btn-danger">Delete All</button>
+                        <form action="{{route('frontend.dashboard.notification.deleteAll')}}" method="POST">
+                            @csrf
+                            <button style="margin-left: 250px" class="btn btn-sm btn-danger">Delete All</button>
+                        </form>
                     </div>
                 </div>
                 @forelse(auth()->user()->notifications as $notification)
@@ -62,14 +65,18 @@
                         <div class="notification alert alert-info">
                             <strong>You have a notification from : {{ $notification->data['user_name'] }}</strong> Post title : {{$notification->data['post_title']}}
                             <div class="float-right">
-                                <button class="btn btn-danger btn-sm">Delete</button>
+                                <form action="{{route('frontend.dashboard.notification.delete')}}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{$notification->id}}">
+                                    <button class="btn btn-danger btn-sm">Delete</button>
+                                </form>
                             </div>
                         </div>
                     </a>
                 @empty
                     <div class="alert-info">
                         No Notification
-
+                    </div>
                 @endforelse
 
             </div>

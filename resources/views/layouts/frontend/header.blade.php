@@ -94,7 +94,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notificationDropdown"
                             style="width: 300px;">
-                            <h6 class="dropdown-header">Notifications</h6>
+                            <a href="{{route('frontend.dashboard.notification.readAll')}}" class="dropdown-header">Mark All As Read</a>
 
                             @forelse (auth()->user()->unreadNotifications as $notification)
                                 <div class="dropdown-item d-flex justify-content-between align-items-center">
