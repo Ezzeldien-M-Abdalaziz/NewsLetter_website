@@ -107,6 +107,7 @@
 
                             @empty
                                 <div class="dropdown-item text-center">No Notifications</div>
+
                             @endforelse
 
                         </div>
